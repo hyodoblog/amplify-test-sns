@@ -117,6 +117,21 @@ export type ModelPostConnection = {
   nextToken?: string | null,
 };
 
+export type ModelIntKeyConditionInput = {
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+};
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
+
 export type CreatePostMutationVariables = {
   input: CreatePostInput,
   condition?: ModelPostConditionInput | null,
@@ -172,6 +187,54 @@ export type ListPostsQueryVariables = {
 
 export type ListPostsQuery = {
   listPosts?:  {
+    __typename: "ModelPostConnection",
+    items?:  Array< {
+      __typename: "Post",
+      type: string,
+      id?: string | null,
+      content: string,
+      owner?: string | null,
+      timestamp: number,
+    } | null > | null,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ListPostsSortedByTimestampQueryVariables = {
+  type?: string | null,
+  timestamp?: ModelIntKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelPostFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListPostsSortedByTimestampQuery = {
+  listPostsSortedByTimestamp?:  {
+    __typename: "ModelPostConnection",
+    items?:  Array< {
+      __typename: "Post",
+      type: string,
+      id?: string | null,
+      content: string,
+      owner?: string | null,
+      timestamp: number,
+    } | null > | null,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ListPostsBySpecificOwnerQueryVariables = {
+  owner?: string | null,
+  timestamp?: ModelIntKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelPostFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListPostsBySpecificOwnerQuery = {
+  listPostsBySpecificOwner?:  {
     __typename: "ModelPostConnection",
     items?:  Array< {
       __typename: "Post",
